@@ -245,8 +245,8 @@ class AndorCCDPsfFitImage(AndorCCDPsfImage):
 
     def _fit(self):
         amplitude = self.data.max()
-        guess_params = calculate_best_guess_params(0 * u.arcmin, 0 * u.arcmin)
-        print(guess_params)
+        #guess_params = calculate_best_guess_params(0 * u.arcmin, 0 * u.arcmin)
+        #print(guess_params)
         g_init = PSF2DModel(amplitude1=amplitude, x_stddev1=3, y_stddev1=3,
                             amplitude2=amplitude / 10., x_stddev2=5, y_stddev2=5,
                             amplitude3=amplitude / 20., x_stddev3=10, y_stddev3=10,
