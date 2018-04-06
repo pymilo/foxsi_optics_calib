@@ -122,8 +122,8 @@ class AndorCCDImage(CCDData):
         ax.grid(color='white', ls='solid', alpha=0.5)
         ax.set_xlabel('X [arcsec]')
         ax.set_ylabel('Y [arcsec]')
-        ax.set_ylim(self.ylim[0], self.ylim[1])
-        ax.set_xlim(self.xlim[0], self.xlim[1])
+        ax.set_ylim(self.ylim[0]-1, self.ylim[1]-1)
+        ax.set_xlim(self.xlim[0]-1, self.xlim[1]-1)
         ax.autoscale(False)
 
         if title is None:
@@ -194,7 +194,7 @@ class AndorCCDPsfImage(AndorCCDImage):
     def __init__(self, filename, darkfile, distance):
         AndorCCDImage.__init__(self, filename, darkfile, distance)
         maxpix = np.unravel_index(np.argmax(self.data), self.shape)
-        self.wcs.wcs.crpix = [maxpix[1], maxpix[0]]
+        self.wcs.wcs.crpix = [maxpix[1]+1, maxpix[0]+1]
         self.set_xlim(-40, 40)
         self.set_ylim(-40, 40)
 
@@ -208,8 +208,8 @@ class AndorCCDPsfImage(AndorCCDImage):
         for i in np.arange(max_pixel_range):
             hpd_array[i] = np.sum(self.data[r < i])
         hpd_array /= hpd_array.max()
-        binning = 2 # Binning used for the ANDOR camera when taking data
-        diameter = 2 * binning * np.arange(max_pixel_range) * CCD_PLATE_SCALE
+        #binning = 2 # Binning used for the ANDOR camera when taking data
+        diameter = 2 * np.arange(max_pixel_range) * CCD_PLATE_SCALE
         hpd_value = np.interp(0.5, hpd_array, diameter)
         return hpd_value, hpd_array, diameter
 

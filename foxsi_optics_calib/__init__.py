@@ -28,4 +28,5 @@ def plate_scale(distance):
     """Assuming the pixel pitch of the Andor camera and given the distance
     between the optic and the detector (usually the focal length of the optic)
     , provide the plate scale"""
-    return np.arctan(CCD_PIXEL_PITCH / distance).to(u.arcsec)
+    binning = 2
+    return  np.arctan(binning * CCD_PIXEL_PITCH / distance).to(u.arcsec)
